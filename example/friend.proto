@@ -1,0 +1,37 @@
+//protoc user.proto --cpp_out=./ --proto_path=./
+
+syntax = "proto3"; 
+
+package fixbug; 
+
+// 定义下面的选项，表示生成service服务类和rpc方法描述，默认不生成
+option cc_generic_services = true;
+
+message ResultCode
+{
+    int32 errcode = 1;
+    bytes errmsg = 2;
+}
+
+
+message GetFriendListRequest
+{
+    uint32 userid = 1;
+   
+}
+
+
+message GetFriendListResponse
+{
+    ResultCode result = 1;
+    repeated bytes friends = 2;
+}
+
+
+
+// 在protobuf里面怎么定义描述rpc方法的类型 - service
+service FriendServiceRpc
+{
+    rpc GetFriendList(GetFriendListRequest) returns(GetFriendListResponse);
+    
+}
